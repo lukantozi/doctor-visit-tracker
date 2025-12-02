@@ -1,0 +1,27 @@
+<!-- Template layout and styles generated with the help of ChatGPT for readability and consistency -->
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .visit-info {
+        margin-top: 20px;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+    }
+
+    .visit-info h2 {
+        margin-bottom: 10px;
+    }
+</style>
+
+<div class="visit-info">
+    <h2>Visit on {{ visit_details.date }}</h2>
+    <p><strong>Patient:</strong> {{ visit_details.person.first_name }} {{ visit_details.person.last_name }}</p>
+    <p><strong>Notes:</strong> {{ visit_details.notes }}</p>
+</div>
+
+<a href="{% url 'update_visit' visit_details.pk %}" class="button-link">Edit Visit</a> |
+<a href="{% url 'delete_visit' visit_details.pk %}" class="button-link">Delete Visit</a> |
+<a href="{% url 'patient_detail' visit_details.person.pk %}" class="button-link">Back to Patient's Visit History</a>
+{% endblock %}

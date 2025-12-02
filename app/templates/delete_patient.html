@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Delete Patient</h1>
+
+<form method="post">{% csrf_token %}
+    <p>Are you sure you want to remove patient {{ object.first_name }} {{ object.last_name }} from the system?</p>
+    <input type="submit" value="Confirm">
+</form>
+
+{% endblock %}

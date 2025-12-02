@@ -1,0 +1,80 @@
+<!-- Template layout and styles generated with the help of ChatGPT for readability and consistency -->
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    th, td {
+        border: 1px solid #ccc;
+        padding: 8px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f5f5f5;
+    }
+
+    tr:hover {
+        background-color: #f9f9f9;
+    }
+</style>
+
+<h1>Patient List:</h1>
+
+<form method="get" action="{% url 'patients' %}">
+    <input autocomplete="off" type="text" name="q" placeholder="Search by name" value="{{ request.GET.q }}">
+    <button type="submit">Search</button>
+</form>
+
+{% if patients %}
+<table>
+    <thead>
+        <tr>
+            <th>Date of Birth</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Details</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for patient in patients %}
+        <tr>
+            <td>{{ patient.date_of_birth }}</td>
+            <td>{{ patient.first_name }}</td>
+            <td>{{ patient.last_name }}</td>
+            <td>{{ patient.phone_number }}</td>
+            <td>{{ patient.email }}</td>
+            <td><a href="{% url 'patient_detail' patient.pk %}" class="button-link">View</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No patients found.</p>
+{% endif %}
+
+<div class="pagination">
+    <span class="page-links">
+        {% if page_obj.has_previous %}
+            <a href="?{% if request.GET.q %}q={{ request.GET.q }}&{% endif %}page={{ page_obj.previous_page_number }}">Previous</a>
+        {% endif %}
+
+        <span class="current-page">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?{% if request.GET.q %}q={{ request.GET.q }}&{% endif %}page={{ page_obj.next_page_number }}">Next</a>
+        {% endif %}
+    </span>
+</div>
+
+<a href="{% url 'add_patient' %}" class="button-link">Add Patient</a>
+{% endblock %}

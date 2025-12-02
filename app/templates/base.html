@@ -1,0 +1,203 @@
+<!-- Template layout and styles generated with the help of ChatGPT for readability and consistency -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Doctor App</title>
+    <style>
+        /* Reset & Layout */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0 20px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #d1a0d3e8;
+            padding: 10px 30px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-left a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            margin-right: 20px;
+            font-size: 15px;
+            line-height: 1;
+        }
+
+        .nav-left a:hover {
+            text-decoration: underline;
+        }
+
+        .nav-right form {
+            margin: 0;
+        }
+
+        .nav-right button {
+            color: #fff;
+            background: none;
+            border: none;
+            font-weight: bold;
+            font-size: 15px;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .nav-right button:hover {
+            text-decoration: underline;
+        }
+
+        /* Button styles (applied to both buttons and links that act like buttons) */
+        button,
+        .button-link {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 14px;
+            background-color: #7b9fc5;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        button:hover,
+        .button-link:hover {
+            background-color: #0056b3;
+            text-decoration: none;
+        }
+
+        /* Form fields */
+        form {
+            margin: 20px 0;
+        }
+
+        form input[type="text"],
+        form input[type="email"],
+        form input[type="password"],
+        form input[type="date"],
+        form input[type="number"],
+        form select,
+        form textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        /* Pagination */
+        .pagination {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .page-links a {
+            margin: 0 10px;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .page-links .current-page {
+            font-weight: bold;
+        }
+
+        /* Visit display */
+        .visit-info {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: white;
+        }
+
+        .visit-info h2 {
+            margin-bottom: 10px;
+        }
+
+        .errorlist {
+            color: red;
+            margin-bottom: 10px;
+        }
+
+        .message-container {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .alert {
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        .alert.success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .alert.error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Login form container */
+        .login-container {
+            max-width: 400px;
+            margin: 60px auto;
+            padding: 30px;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+        }
+
+        .login-container h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Doctor Visit Management</h1>
+
+    {% if messages %}
+        <div class="message-container">
+            {% for message in messages %}
+                <div class="alert {{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if user.is_authenticated %}
+    <nav class="navbar">
+        <div class="nav-left">
+            <a href="{% url 'patients' %}">Patients</a>
+            <a href="{% url 'visits' %}">Visits</a>
+            <a href="{% url 'add_patient' %}">Add Patient</a>
+            <a href="{% url 'add_visit' %}">Add Visit</a>
+        </div>
+        <div class="nav-right">
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit">Logout</button>
+            </form>
+        </div>
+    </nav>
+    {% endif %}
+
+    {% block content %}
+    {% endblock %}
+</body>
+</html>
